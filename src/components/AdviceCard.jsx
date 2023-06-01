@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import styles from './AdviceCard.module.css';
+import React, {Component} from 'react';
 import mobileDivider from '../assets/images/divider-mobile.svg';
 import desktopDivider from '../assets/images/divider-desktop.svg';
 import dice from '../assets/images/icon-dice.svg';
@@ -11,16 +11,16 @@ class AdviceCard extends Component {
     loading: true,
   };
 
-  componentDidMount() {
-    this.fetchAdvice();
-  }
-
   fetchAdvice = async () => {
     this.setState({ loading: true });
     const response = await fetchData();
 
     this.setState({ data: response, loading: false });
   };
+
+  componentDidMount() {
+    this.fetchAdvice();
+  }
 
   fetchNewAdvice = () => {
     this.fetchAdvice();
@@ -41,10 +41,7 @@ class AdviceCard extends Component {
             <source media="(max-width: 540px)" srcSet={ mobileDivider } />
             <img src={ desktopDivider } alt="Divisor" />
           </picture>
-          <button
-            className={ styles.dice }
-            onClick={ this.fetchNewAdvice }
-          >
+          <button className={ styles.dice } onClick={ this.fetchNewAdvice }>
             <img src={ dice } alt="" />
           </button>
         </div>
