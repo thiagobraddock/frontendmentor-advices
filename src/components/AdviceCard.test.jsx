@@ -1,9 +1,11 @@
 import {
   render,
   screen,
+  waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
+import { vi } from 'vitest';
 import AdviceCard from './AdviceCard';
 
 import * as ADVICEAPI from '../services/advice-api';
@@ -24,26 +26,25 @@ const adviceMock2 = {
 
 describe('<AdviceCard />', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('deve renderizar um "conselho" na tela', async () => {
-    jest.spyOn(global, 'fetch')
+    vi.spyOn(global, 'fetch')
       .mockResolvedValueOnce({
-        json: jest.fn().mockResolvedValue(adviceMock),
+        json: vi.fn().mockResolvedValue(adviceMock),
         ok: true,
       })
       .mockResolvedValueOnce({
-        json: jest.fn().mockResolvedValue(adviceMock2),
+        json: vi.fn().mockResolvedValue(adviceMock2),
         ok: true,
       });
 
-    // jest.spyOn(ADVICEAPI, 'fetchData').mockResolvedValue(adviceMock);
+    // vi.spyOn(ADVICEAPI, 'fetchData').mockResolvedValue(adviceMock);
 
     render(<AdviceCard />);
-    const loading = await screen.findByText(/loading/i, {}, { timeout: 3000 });
 
-    expect(loading).toBeInTheDocument();
+    await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
 
     const advice = await screen.findByText(/let the bastards grind/i);
 
@@ -51,9 +52,7 @@ describe('<AdviceCard />', () => {
 
     const button = screen.getByRole('button');
 
-    await act(async () => {
-      userEvent.click(button);
-    });
+    await userEvent.click(button);
 
     expect(global.fetch).toHaveBeenCalledTimes(2);
 
