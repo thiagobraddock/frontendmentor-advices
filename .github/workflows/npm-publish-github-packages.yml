@@ -19,11 +19,7 @@ jobs:
       - run: npm ci
       - run: npm test
       
-      - name: Install ESLint config
-        run: npm install @trybe/eslint-config-frontend --save-dev
-      
-      - name: ESLint Suggestion
-        uses: CatChen/eslint-suggestion-action@v2.1.18
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
         with:
-          targets: '**/*.{js,jsx}'
-          eslint-lib-path: './node_modules/@trybe/eslint-config-frontend/'
+          eslint: true
