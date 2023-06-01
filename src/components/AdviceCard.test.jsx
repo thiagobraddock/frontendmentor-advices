@@ -1,51 +1,50 @@
 import {
   render,
   screen,
+  waitForElementToBeRemoved,
 } from '@testing-library/react';
-import AdviceCard from './AdviceCard';
-
-
-import * as ADVICEAPI from '../services/advice-api';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
+import { vi } from 'vitest';
+import AdviceCard from './AdviceCard';
 
+import * as ADVICEAPI from '../services/advice-api';
 
 const adviceMock = {
   slip: {
     id: 33,
-    advice: "Don't let the bastards grind you down.",
+    advice: 'Don\'t let the bastards grind you down.',
   },
 };
 
 const adviceMock2 = {
   slip: {
     id: 1,
-    advice: "Não é quem você é por dentro e sim o que você faz que te define.",
+    advice: 'Não é quem você é por dentro e sim o que você faz que te define.',
   },
 };
 
 describe('<AdviceCard />', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('deve renderizar um "conselho" na tela', async () => {
-    jest.spyOn(global, 'fetch')
-    .mockResolvedValueOnce({
-      json: jest.fn().mockResolvedValue(adviceMock),
-      ok: true,
-    })
-    .mockResolvedValueOnce({
-    json: jest.fn().mockResolvedValue(adviceMock2),
-    ok: true,
-  });
+    vi.spyOn(global, 'fetch')
+      .mockResolvedValueOnce({
+        json: vi.fn().mockResolvedValue(adviceMock),
+        ok: true,
+      })
+      .mockResolvedValueOnce({
+        json: vi.fn().mockResolvedValue(adviceMock2),
+        ok: true,
+      });
 
-    // jest.spyOn(ADVICEAPI, 'fetchData').mockResolvedValue(adviceMock);
+    // vi.spyOn(ADVICEAPI, 'fetchData').mockResolvedValue(adviceMock);
 
     render(<AdviceCard />);
-    const loading = await screen.findByText(/loading/i, {}, { timeout: 3000 });
 
-    expect(loading).toBeInTheDocument();
+    await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
 
     const advice = await screen.findByText(/let the bastards grind/i);
 
@@ -53,9 +52,7 @@ describe('<AdviceCard />', () => {
 
     const button = screen.getByRole('button');
 
-    await act(async()=> {
-      userEvent.click(button);
-    })
+    await userEvent.click(button);
 
     expect(global.fetch).toHaveBeenCalledTimes(2);
 
