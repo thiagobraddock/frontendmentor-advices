@@ -12,20 +12,14 @@ class AdviceCard extends Component {
   };
 
   componentDidMount() {
-    this.isMounted = true;
     this.fetchAdvice();
-  }
-
-  componentWillUnmount() {
-    this.isMounted = false;
   }
 
   fetchAdvice = async () => {
     this.setState({ loading: true });
     const response = await fetchData();
-    if (this.isMounted) {
-      this.setState({ data: response, loading: false });
-    }
+
+    this.setState({ data: response, loading: false });
   };
 
   fetchNewAdvice = () => {
