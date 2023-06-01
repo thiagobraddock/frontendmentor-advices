@@ -26,4 +26,4 @@ jobs:
         uses: CatChen/eslint-suggestion-action@v2.1.18
         with:
           targets: '**/*.{js,jsx}'
-          eslint-lib-path: './node_modules/@trybe/eslint-config-frontend/node_modules/eslint/lib/api.js'
+          eslint-lib-path: './node_modules/@trybe/eslint-config-frontend/'
