@@ -2,25 +2,23 @@ import {
   render,
   screen,
 } from '@testing-library/react';
-import AdviceCard from './AdviceCard';
-
-
-import * as ADVICEAPI from '../services/advice-api';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
+import AdviceCard from './AdviceCard';
 
+import * as ADVICEAPI from '../services/advice-api';
 
 const adviceMock = {
   slip: {
     id: 33,
-    advice: "Don't let the bastards grind you down.",
+    advice: 'Don\'t let the bastards grind you down.',
   },
 };
 
 const adviceMock2 = {
   slip: {
     id: 1,
-    advice: "Não é quem você é por dentro e sim o que você faz que te define.",
+    advice: 'Não é quem você é por dentro e sim o que você faz que te define.',
   },
 };
 
@@ -31,14 +29,14 @@ describe('<AdviceCard />', () => {
 
   it('deve renderizar um "conselho" na tela', async () => {
     jest.spyOn(global, 'fetch')
-    .mockResolvedValueOnce({
-      json: jest.fn().mockResolvedValue(adviceMock),
-      ok: true,
-    })
-    .mockResolvedValueOnce({
-    json: jest.fn().mockResolvedValue(adviceMock2),
-    ok: true,
-  });
+      .mockResolvedValueOnce({
+        json: jest.fn().mockResolvedValue(adviceMock),
+        ok: true,
+      })
+      .mockResolvedValueOnce({
+        json: jest.fn().mockResolvedValue(adviceMock2),
+        ok: true,
+      });
 
     // jest.spyOn(ADVICEAPI, 'fetchData').mockResolvedValue(adviceMock);
 
@@ -53,9 +51,9 @@ describe('<AdviceCard />', () => {
 
     const button = screen.getByRole('button');
 
-    await act(async()=> {
+    await act(async () => {
       userEvent.click(button);
-    })
+    });
 
     expect(global.fetch).toHaveBeenCalledTimes(2);
 
