@@ -19,9 +19,10 @@ jobs:
       - run: npm ci
       - run: npm test
           
-      - name: ESLint checker
-        uses: ninosaurus/eslint-check@v5.3.1
+      - name: Eslint Annotate
+        uses: a-b-r-o-w-n/eslint-action@v2.2.0
         with:
+          # Token used to interact with the Github API.
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          custom-directory: ./src
-          eslint-config-path: .eslintrc
+
+
