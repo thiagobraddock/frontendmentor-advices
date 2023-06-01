@@ -19,9 +19,11 @@ jobs:
       - run: npm ci
       - run: npm test
           
-      - name: ESLint checker
-        uses: ninosaurus/eslint-check@v5.3.1
+
+      - name: Eslint check
+        uses: krizzu/eslint-check-action@v1.1.0
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          custom-directory: ./src
-          eslint-config-path: .eslintrc
+          ghToken: ${{ secrets.GITHUB_TOKEN }}
+    # Relative path to files/directories to run lint on.
+          eslintFiles: ./src/
+    # Relative path to eslint config. Can either be ".js" config, ".eslintrc" or "package.json".
