@@ -18,12 +18,10 @@ jobs:
           cache-dependency-path: 'package-lock.json'
       - run: npm ci
       - run: npm test
-          
 
-      - name: Eslint check
-        uses: krizzu/eslint-check-action@v1.1.0
+      - name: ESLint Action eslintrc
+        uses: mrdivyansh/eslint-action@v1.0.7
         with:
-          ghToken: ${{ secrets.GITHUB_TOKEN }}
-    # Relative path to files/directories to run lint on.
-          eslintFiles: ./src/
-    # Relative path to eslint config. Can either be ".js" config, ".eslintrc" or "package.json".
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          eslint-rc: .eslintrc
+          execute-on-files: ./src/
