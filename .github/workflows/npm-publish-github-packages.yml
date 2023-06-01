@@ -18,10 +18,9 @@ jobs:
           cache-dependency-path: 'package-lock.json'
       - run: npm ci
       - run: npm test
-
-      - name: ESLint Action eslintrc
-        uses: mrdivyansh/eslint-action@v1.0.7
+          
+      - name: ESLint Suggestion
+        uses: CatChen/eslint-suggestion-action@v2.1.18
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          eslint-rc: .eslintrc
-          execute-on-files: ./src/
+          directory: ./src
+          targets: '**/*.{js,jsx}' 
