@@ -1,10 +1,11 @@
-const fetchData = async (url) => {
+export const fetchData = async () => {
+  const url = 'https://api.adviceslip.com/advice';
   const response = await fetch(url);
+  // console.log('RESPONSE: ',response);
   if (!response.ok) {
-    throw new Error(`Error fetching data from ${url}`);
+    throw new Error('Erro ao buscar dados da API');
   }
-  return response.json();
-};
+  const data = await response.json();
 
-export const fetchRandomAdvice = async () =>
-  fetchData(`https://api.adviceslip.com/advice`);
+  return data;
+};
