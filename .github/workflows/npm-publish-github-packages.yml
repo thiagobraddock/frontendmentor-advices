@@ -24,3 +24,18 @@ jobs:
         with:
           eslint: true
           eslint_extensions: "js,jsx,ts,tsx"
+          
+      - name: Comment on PR 
+        if: ${{ steps.eslint.outputs.has_suggestions == 'true' }}
+        run: |
+          echo "${{ steps.eslint.outputs.suggestions }}" > suggestions.json
+          echo "::set-output name=suggestions::suggestions.json"
+          cat suggestions.json
+          # Use the GitHub API to create comments on the PR
+          # Replace the placeholders with your own values
+          # For more information, see the GitHub API documentation
+          curl -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -d @suggestions.json \
+            "https://api.github.com/repos/thiagobraddock/frontendmentor-advices/pulls/${{ github.event.pull_request.number }}/comments"
